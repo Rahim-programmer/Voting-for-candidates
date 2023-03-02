@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class candidateGeneration {
+public class CandidateGeneration {
     private List<Candidate> candidates = new ArrayList<>();
 
     public List<Candidate> getCandidates() {
