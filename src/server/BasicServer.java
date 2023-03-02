@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public abstract class BasicServer {
 
     private final HttpServer server;
-    // путь к каталогу с файлами, которые будет отдавать сервер по запросам клиентов
     private final String dataDir = "data";
     private Map<String, RouteHandler> routes = new HashMap<>();
 
@@ -34,12 +33,10 @@ public abstract class BasicServer {
     }
 
     private static String makeKey(HttpExchange exchange) {
-        var method = exchange.getRequestMethod(); // GET, POST
+        var method = exchange.getRequestMethod();
         var path = exchange.getRequestURI().getPath();
-
         var index = path.lastIndexOf(".");
         var extOrPath = index != -1 ? path.substring(index).toLowerCase() : path;
-
         return makeKey(method, extOrPath);
     }
 
@@ -59,25 +56,11 @@ public abstract class BasicServer {
     }
 
     private void registerCommonHandlers() {
-        // самый основной обработчик, который будет определять
-        // какие обработчики вызывать в дальнейшем
         server.createContext("/", this::handleIncomingServerRequests);
-
-        // специфичные обработчики, которые выполняют свои действия
-        // в зависимости от типа запроса
-
-        // обработчик для корневого запроса
-        // именно этот обработчик отвечает что отображать,
-        // когда пользователь запрашивает localhost:9889
-
-        // эти обрабатывают запросы с указанными расширениями
         registerFileHandler(".css", ContentType.TEXT_CSS);
         registerFileHandler(".html", ContentType.TEXT_HTML);
         registerFileHandler(".jpg", ContentType.IMAGE_JPEG);
         registerFileHandler(".jpeg", ContentType.IMAGE_JPEG);
-        registerFileHandler(".png", ContentType.IMAGE_PNG);
-        registerFileHandler(".svg", ContentType.IMAGE_SVG);
-
     }
 
     protected final void registerGet(String route, RouteHandler handler) {
@@ -176,8 +159,6 @@ public abstract class BasicServer {
     }
 
     protected String getQueryParams(HttpExchange exchange) {
-        // нам "повезло", что HttpExchange умеет вытаскивать
-        // параметры запроса из строки запроса.
         String query = exchange.getRequestURI().getQuery();
         return Objects.nonNull(query) ? query : "";
     }
