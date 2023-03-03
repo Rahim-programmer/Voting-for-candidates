@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="freemarker">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/src/ventor/freemarker.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/freemarker.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
